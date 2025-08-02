@@ -1,0 +1,31 @@
+L'obiettivo del progetto è realizzare un sistema di supporto per la gestione di un negozio, che vende articoli ludico-narrativi (fumetti, carte, giochi da tavolo, giochi di ruolo e gadget correlati) con a disposizione una parte del locale, fornita di tavoli da utilizzare per ospitare eventi o a disposizione dei clienti.
+
+Nel sistema saranno salvati gli Utenti che comprendono: sia i Clienti e sia i dipendenti (Admin), tutti presenteranno idUtente, mail e password, in più i Clienti presentano delle informazioni aggiuntive per le spedizioni (nome, cognome, data di nascita, 1 o più indirizzi di consegna).
+
+Un Evento è identificato da un id, e presenta un nome, una presentazione, un massimo di partecipanti, numero dei partecipanti, un responsabile, una data e orario di inizio e di fine, e può essere privato o pubblico; gli Utenti possono partecipare a qualsiasi Evento pubblico, un Admin può creare qualsiasi tipo di evento (quelli privati sono creati per conto di un cliente "fisico", che si presenta al negozio per prenotare un tavolo per un Evento) e un Cliente può creare Eventi privati.
+In un Evento possono essere utilizzati degli Articoli (non in vendita, deposti a matertiale per gli eventi) e dei tavoli entrambi non possono essere utilizzati per più di un Evento alla volta.
+
+Gli Articoli sono identificato da un bar code e  prsentano un nome, una desrizione, un prezzo di listino, un prezzo di vendita, la disponibilità e se sono vendibili o sono materiale per eventi; sono divisi in gruppi con caratteristiche diverse tra loro: Carte collezionabili (gioco, espansione, formato), Giochi di ruolo (tipo), Giochi in scatola (linea, meccanica, min giocatori, max giocatori, tempo medio), Libri e fumetti (serie, categoria, autore), Modellismo (marca), Gadget e gioccattoli (franchise), Accessori (tematica).ù
+Un Cliente può fare un ordine on line che presenta Articoli, che sono vendibili; un Admin può ordinare a un Fornitore (identificato dalla partita iva, e dotato di dominio) gli Articoli per rifornire il negozio.
+Per semplicità non viene gestito l’aspetto relativo alla gestione di pagamenti e carte di credito.
+
+Le funzionalità offerte dalla piattaforma sono le seguenti:
+
+1. Registrare Clienti, con le reletavi informazioni
+2. Creare un evento privato
+3. Prenotare un evento pubblico
+4. Fare un ordine di prodotti presenti in negozio e vendibili
+
+Inoltre sarà possibile consultare informazioni aggregate:
+
+1. Ottenere gli ordini fatti giornalmente
+2. Ottenere un calendario degli eventi pubblici
+3. Ottenere gli eventi creati e a cui si partecipa
+4. Ottenere il totale incassi-spese del negozio mensile
+
+Infine, un’amministratore del sito potrà:
+
+1. Aggiungere un nuovo amministratore
+2. Creare creare eventi pubblici
+3. Aggiungere o togliere articoli e tavoli
+4. Fare un ordine a un fornitore
