@@ -1,15 +1,14 @@
 package main;
 
+
 import javax.swing.JFrame;
 
-import gui.panel.Acces;
+import controller.Controller;
 
 public class CasaDeiGiochi {
     public static void main(String[] args) {
+        Controller controller;
         JFrame frame = new JFrame();
-        frame.add(new Acces());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
-        frame.setVisible(true);
+        controller = new Controller(frame);
     }
 }

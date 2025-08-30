@@ -1,0 +1,74 @@
+use CASA_DEI_GIOCHI;
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('12345670123', 'panini@info.it', 'panini');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('98765430219', 'need.games@info.it', 'need games');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('45678910111', 'hasbro@info.it', 'hasbro');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('32109870456', 'planet.manga@info.it', 'planet manga');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('65432190876', 'citadel@info.it', 'citadel');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('78901230543', 'funko@info.it', 'funko');
+
+insert into FORNITORE (p_iva, dominio, nominativo)
+values ('23456780987', 'chessex@info.it', 'chessex');
+
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('9f3a1c2e-4b7d-4e8f-9a6c-2d1f3e7b9c4a', 'pacchetto magic', 10, '12345670123');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('7e2b4d1f-8c3a-4f9e-b6d2-1a9f3c7e5b8d', '7th sea', 50, '98765430219');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('3c7e9a1f-2d4b-8f6c-9e1a-7b5d3f2e4c8a', 'monopoly', 30, '45678910111');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('1a9f3c7e-5b8d-4e2b-6d1f-8c3a9e7f2c4b', 'one piece 1', 6, '32109870456');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('4e2b6d1f-8c3a-9f7e-5b8d-1a3c2e4f9c7a', 'set guerrieri', 20, '65432190876');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('8c3a9e7f-2c4b-1a9f-3c7e-5b8d4e2b6d1f', 'naruto', 25, '78901230543');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('5b8d1a3c-2e4f-9c7a-8c3a-6d1f2b4e9f7e', 'set dadi rossi', 10, '23456780987');
+
+
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('2d4b8f6c-9e1a-7b5d-3f2e-4c8a1a9f3c7e', 'pacchetto lorcana', 10, '12345670123');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('6d1f2b4e-9f7e-8c3a-1a9f-3c7e5b8d4e2b', 'dragon bane', 50, '98765430219');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('9e1a7b5d-3f2e-4c8a-2d4b-8f6c1a9f3c7e', 'risiko', 30, '45678910111');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('3f2e4c8a-1a9f-5b8d-6d1f-2b4e9f7e8c3a', 'naruto 35', 6, '32109870456');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('1a3c2e4f-9c7a-5b8d-8c3a-6d1f2b4e9f7e', 'set driadi', 20, '65432190876');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('7b5d3f2e-4c8a-2d4b-9e1a-8f6c1a9f3c7e', 'sdentato', 25, '78901230543');
+
+insert into PRODOTTO (id_prodotto, nome_prodotto, costo, p_iva)
+values ('4c8a2d4b-9e1a-7b5d-3f2e-1a9f8c3a6d1f', 'set dadi bianchi', 10, '23456780987');
+
+
+insert into cliente (id_utente, mail, password, nome, cognome, data_di_nascita, indirizzo_1)
+values ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'giacomo.giacomini@hotmail.com', 'giacomo', 'giacomo', 'giacomini', '1998-12-09', 'via garibaldi 5');
+
+insert into admin (id_admin, mail, password)
+values ('9b1deb4d-3b7d-4f2a-a2f7-3d6f0f2f9b1a', 'mario.rossi@casa.dei.giochi.it', 'mario')
