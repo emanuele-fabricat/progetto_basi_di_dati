@@ -1,7 +1,5 @@
 package applicazione.gui.panel.main;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.sql.Connection;
@@ -9,12 +7,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import applicazione.controller.Controller;
 import applicazione.dao.DAOException;
@@ -31,63 +28,41 @@ public class ClientRegister extends JPanel{
     private static final int MAX_LENGTH_ADDRESS = 100;
     private final Controller controller;
     private final Connection connection = DAOUtils.localMySQLConnection("casa_dei_giochi", "root", "el@pFG2020");
-    private final JTextArea mail = new JTextArea("mail");
-    private final JTextArea insertMail = new JTextArea();
-    private final JTextArea password = new JTextArea("password");
-    private final JTextArea insertPassword = new JTextArea();
-    private final JTextArea name = new JTextArea("nome");
-    private final JTextArea insertName = new JTextArea();
-    private final JTextArea surname = new JTextArea("cognome");
-    private final JTextArea insertSurname = new JTextArea();
-    private final JTextArea date = new JTextArea("data di nascita anno-mese-data");
-    private final JTextArea insertDate = new JTextArea();
-    private final JTextArea address1 = new JTextArea("indirizzo prinicpale");
-    private final JTextArea insertAddress1 = new JTextArea();
-    private final JTextArea address2 = new JTextArea("indirizzo secondario (opzionale)");
-    private final JTextArea insertAddress2 = new JTextArea();
-    private final JTextArea address3 = new JTextArea("indirizzo terziario (opzionale)");
-    private final JTextArea insertAddress3 = new JTextArea();
+    private final JTextArea mail = new JTextArea();
+    private final JTextArea password = new JTextArea();
+    private final JTextArea name = new JTextArea();
+    private final JTextArea surname = new JTextArea();
+    private final JTextArea date = new JTextArea();
+    private final JTextArea address1 = new JTextArea();
+    private final JTextArea address2 = new JTextArea();
+    private final JTextArea address3 = new JTextArea();
     private final JButton confirm =  new JButton("confirm");
     private final JButton back =  new JButton("indietro"); 
 
     public ClientRegister(final Controller controller) {
         this.controller = controller;
         setPreferredSize(new Dimension(500, 200));
-        setLayout(new GridLayout(9, 2));
+        setLayout(new GridLayout(5, 2));
         add(this.mail);
-        this.mail.setEditable(false);
-        add(this.insertMail);
         add(this.password);
-        this.password.setEditable(false);
-        add(this.insertPassword);
         add(this.name);
-        this.name.setEditable(false);
-        add(this.insertName);
         add(this.surname);
-        this.surname.setEditable(false);
-        add(this.insertSurname);
         add(this.date);
-        this.date.setEditable(false);
-        add(this.insertDate);
         add(this.address1);
-        this.address1.setEditable(false);
-        add(this.insertAddress1);
         add(this.address2);
-        this.address2.setEditable(false);
-        add(this.insertAddress2);
-        add(address3);
-        this.address3.setEditable(false);
-        add(insertAddress3);
+        add(this.address3);
         add(this.confirm);
         add(this.back);
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        for (Component comp : this.getComponents()) {
-            if (comp instanceof JTextArea) {
-                ((JTextArea) comp).setBorder(border);
-            }
-        }
+        this.mail.setBorder(new TitledBorder("Inserisci mail"));
+        this.password.setBorder(new TitledBorder("Inserisci password"));
+        this.name.setBorder(new TitledBorder("Inserisci nome"));
+        this.surname.setBorder(new TitledBorder("Inserisci cognome"));
+        this.date.setBorder(new TitledBorder("Inserisci data di nascita"));
+        this.address1.setBorder(new TitledBorder("Inserisci indirizzo di consegna"));
+        this.address2.setBorder(new TitledBorder("Inserisci indirizzo di consegna opzionale"));
+        this.address3.setBorder(new TitledBorder("Inserisci indirizzo di consegna opzionale"));
         this.back.addActionListener(e -> this.controller.accessBoard());
-        this.confirm.addActionListener(e -> newClient("", this.insertMail.getText(), this.insertPassword.getText(), this.insertName.getText(), this.insertSurname.getText(), this.insertDate.getText(), this.insertAddress1.getText(), this.insertAddress2.getText(), this.insertAddress3.getText()));
+        this.confirm.addActionListener(e -> newClient("", this.mail.getText(), this.password.getText(), this.name.getText(), this.surname.getText(), this.date.getText(), this.address1.getText(), this.address2.getText(), this.address3.getText()));
     }
 
     private void newClient (final String... data) {

@@ -1,5 +1,6 @@
-Per far partire l'applicazione utilizzare per prima cosa impostare il file config.txt con il proprio username e password, il file si trova in applicazione/app/config
-dopo di che è possibile eseguire l'applicazione tramite il file app-all.jar che si trova in applicazione o tramite vs code aprendo il progetto ed eseguedo la classe App
+Per far partire l'applicazione utilizzare per prima cosa impostare il file config.txt con il proprio username e password, il file si trova in app/config
+Poi importare su proprio my sql worckbanch locale il database utilizzando il nome "casa_dei_giochi" e il file casa_dei_gochi.sql
+dopo di che è possibile eseguire l'applicazione tramite il file app-all.jar o tramite vs code aprendo il progetto ed eseguedo la classe App
 
 I clienti già inseriti sono:
 mauro.repetto@gmail.com 
