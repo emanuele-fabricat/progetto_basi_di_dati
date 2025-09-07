@@ -20,9 +20,10 @@ import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class LibriEFumetti extends JPanel{
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM LIBRI_E_FUMETTI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO LIBRI_E_FUMETTI (serie, categoria, autore, id_articolo) "
             + " VALUE (?, ?, ?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
     private final JTextArea serie = new JTextArea("serie");
     private final JTextArea insertSerie = new JTextArea();
@@ -74,8 +75,30 @@ public class LibriEFumetti extends JPanel{
         w.dispose();
     }
 
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
+    }
+    
     private boolean isValidText() {
-        if (this.insertSerie.getText().length() > 100) {
+        if (this.insertCategoria.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il linea categoria è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertAutore.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il linea autore è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertSerie.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo serie è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertSerie.getText().length() > 100) {
             JOptionPane.showMessageDialog(this, "il campo serie è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;

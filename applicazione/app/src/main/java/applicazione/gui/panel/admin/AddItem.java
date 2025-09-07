@@ -184,8 +184,8 @@ public class AddItem extends JPanel {
 
     private void makeOrder() {
         if (numberInformation.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "inserire prima dei prodotti", "Error", JOptionPane.PLAIN_MESSAGE);
-                return;
+            JOptionPane.showMessageDialog(this, "inserire prima dei prodotti", "Error", JOptionPane.PLAIN_MESSAGE);
+            return;
         }
         while (Order.existId(this.orderId)) {
             this.orderId = UUID.randomUUID().toString();
@@ -219,8 +219,8 @@ public class AddItem extends JPanel {
                 } catch (Exception e) {
                     throw new DAOException(e);
                 }
-                makeCategory(entry.getKey().productId, entry.getKey().type);
             }
+            makeCategory(entry.getKey().productId, entry.getKey().type, entry.getKey().name);
         }
         try (
                 var stm = DAOUtils.prepare(connection, INSERT_ORDINE_QUERY, this.orderId,
@@ -232,34 +232,61 @@ public class AddItem extends JPanel {
         this.numberInformation.clear();
     }
 
-    private void makeCategory(final String itemId, final String type) {
+    private void makeCategory(final String itemId, final String type, final String name) {
         JFrame frame = new JFrame();
         Window w = SwingUtilities.getWindowAncestor(this);
         if (w instanceof JFrame) {
             frame = (JFrame) w;
         }
-        JDialog dialog = new JDialog(frame, "Inserisci dati", true);
+        JDialog dialog = new JDialog(frame, name, true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         switch (type) {
             case "ACCESSORI":
-                dialog.setContentPane(new Accessori(itemId));
+                if (!Accessori.exist(itemId)) {
+                    dialog.setContentPane(new Accessori(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "CARTE_COLLEZIONABILI":
-                dialog.setContentPane(new CarteCollezionabili(itemId));
+                if (!CarteCollezionabili.exist(itemId)) {
+                    dialog.setContentPane(new CarteCollezionabili(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "GADGET_E_GIOCATTOLI":
-                dialog.setContentPane(new GadgetEGiocattoli(itemId));
+                if (!GadgetEGiocattoli.exist(itemId)) {
+                    dialog.setContentPane(new GadgetEGiocattoli(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "GIOCHI_DI_RUOLO":
-                dialog.setContentPane(new GiochiDiRuolo(itemId));
+                if (!GiochiDiRuolo.exist(itemId)) {
+                    dialog.setContentPane(new GiochiDiRuolo(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "GIOCHI_IN_SCATOLA":
-                dialog.setContentPane(new GiochiInScatola(itemId));
+                if (!GiochiInScatola.exist(itemId)) {
+                    dialog.setContentPane(new GiochiInScatola(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "LIBRI_E_FUMETTI":
-                dialog.setContentPane(new LibriEFumetti(itemId));
+                if (!LibriEFumetti.exist(itemId)) {
+                    dialog.setContentPane(new LibriEFumetti(itemId));
+                } else {
+                    return;
+                }
                 break;
             case "MODELLISMO":
-                dialog.setContentPane(new Modellismo(itemId));
+                if (!Modellismo.exist(itemId)) {
+                    dialog.setContentPane(new Modellismo(itemId));
+                }
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "non corrisponde nulla", "Error", JOptionPane.PLAIN_MESSAGE);

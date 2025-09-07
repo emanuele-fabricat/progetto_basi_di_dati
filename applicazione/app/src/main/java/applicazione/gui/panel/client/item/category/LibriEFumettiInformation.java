@@ -41,7 +41,7 @@ public class LibriEFumettiInformation extends JScrollPane{
         for (int i = 0; i < this.items.size(); i++) {
             data[i][0] = this.items.get(i).serie;
             data[i][1] = this.items.get(i).categoria;
-            data[i][5] = this.items.get(i).id;
+            data[i][2] = this.items.get(i).id;
         }
 
         JTable table = new JTable(data, column);

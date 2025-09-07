@@ -20,15 +20,16 @@ import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class CarteCollezionabili extends JPanel {
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM CARTE_COLLEZIONABILI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO CARTE_COLLEZIONABILI (gioco, espansione, formato, id_articolo) "
             + "VALUE (?, ?, ?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
     private final JTextArea gioco = new JTextArea("gioco");
     private final JTextArea insertGioco = new JTextArea();
     private final JTextArea espansione = new JTextArea("espansione");
     private final JTextArea insertEspansione = new JTextArea();
-    private final JTextArea formato = new JTextArea("min giocatori");
+    private final JTextArea formato = new JTextArea("formato");
     private final JTextArea insertFormato = new JTextArea();
     private final JButton ok = new JButton("confirm");
     private final JPanel gridPanel = new JPanel();
@@ -74,8 +75,30 @@ public class CarteCollezionabili extends JPanel {
         w.dispose();
     }
 
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
+    }
+
     private boolean isValidText() {
-        if (this.insertGioco.getText().length() > 100) {
+        if (this.insertGioco.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo gioco è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertEspansione.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo espansione è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertFormato.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo formato è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertGioco.getText().length() > 100) {
             JOptionPane.showMessageDialog(this, "il campo gioco è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;

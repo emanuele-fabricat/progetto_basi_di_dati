@@ -20,12 +20,12 @@ import applicazione.model.Table;
 public class VisualizeFreeTable extends JScrollPane {
     private static final String ITEM_QUERY = "SELECT * FROM TAVOLO ORDER BY numero";
 
-    private record EventTable(String number, String capienza) {
+    private record ItemTable(String number, String capienza) {
     }
 
     private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
-    private List<EventTable> tables = new LinkedList<>();
+    private List<ItemTable> tables = new LinkedList<>();
 
     private static JTable table;
     private static DefaultTableModel model;
@@ -35,7 +35,7 @@ public class VisualizeFreeTable extends JScrollPane {
                 var stm = DAOUtils.prepare(connection, ITEM_QUERY);
                 var rS = stm.executeQuery();) {
             while (rS.next()) {
-                this.tables.add(new EventTable(rS.getString("numero"), rS.getString("capienza")));
+                this.tables.add(new ItemTable(rS.getString("numero"), rS.getString("capienza")));
             }
         } catch (Exception e) {
             throw new DAOException(e);
@@ -68,6 +68,9 @@ public class VisualizeFreeTable extends JScrollPane {
             }
         }
 
+    }
+    public static boolean isEmpty() {
+        return table.getRowCount() == 0;
     }
 
 }

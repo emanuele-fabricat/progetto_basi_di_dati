@@ -21,9 +21,10 @@ import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class GiochiInScatola extends JPanel {
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM GIOCHI_IN_SCATOLA WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO GIOCHI_IN_SCATOLA (linea, meccanica, min_giocatori, max_giocatori, tempo_medio, id_articolo) "
             + " VALUE (?, ?, ?, ?, ?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
     private final JTextArea linea = new JTextArea("linea");
     private final JTextArea insertLinea = new JTextArea();
@@ -84,8 +85,26 @@ public class GiochiInScatola extends JPanel {
         w.dispose();
     }
 
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
+    }
+
     private boolean isValidText() {
-        if (this.insertLinea.getText().length() > 100) {
+        if (this.insertLinea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il cmapo linea è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertMeccanica.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo meccanica è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertLinea.getText().length() > 100) {
             JOptionPane.showMessageDialog(this, "il campo linea è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;

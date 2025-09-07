@@ -20,9 +20,10 @@ import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class GadgetEGiocattoli extends JPanel {
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM GADGET_E_GIOCATTOLI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO GADGET_E_GIOCATTOLI (franchise, id_articolo) "
             + " VALUE (?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
     private final JTextArea franchise = new JTextArea("franchise");
     private final JTextArea insertFranchise = new JTextArea();
@@ -65,8 +66,22 @@ public class GadgetEGiocattoli extends JPanel {
         w.dispose();
     }
 
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
+    }
+
     private boolean isValidText() {
-        if (this.insertFranchise.getText().length() > 100) {
+        if (this.insertFranchise.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertFranchise.getText().length() > 100) {
             JOptionPane.showMessageDialog(this, "il campo è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;

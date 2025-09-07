@@ -1,4 +1,4 @@
-package applicazione.gui.panel.admin;
+package applicazione.gui.panel.client;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +22,7 @@ import applicazione.gui.panel.common.StartEvent;
 import applicazione.gui.panel.common.VisualizeFreeTable;
 import applicazione.model.Event;
 
-public class AdminEvent extends JPanel {
+public class ClientEvent extends JPanel {
     private static final String ITEM_QUERY = "SELECT * FROM ARTICOLO ORDER BY tipologia, nome";
 
     private record Item(String id, String name, String description, int price, int qta, String type) {
@@ -37,13 +38,8 @@ public class AdminEvent extends JPanel {
     private static DefaultTableModel model;
     private final String userId;
 
-    public AdminEvent(final String userId, final Event event) {
+    public ClientEvent(final String userId, final Event event) {
         this.userId = userId;
-        add(back);
-        add(tablePanel);
-        add(new VisualizeFreeTable(event.inizio(), event.fine()));
-        add(new MakePublicEvent(userId, event));
-        setLayout(new GridLayout(4, 1));
         try (
                 var stm = DAOUtils.prepare(connection, ITEM_QUERY);
                 var rS = stm.executeQuery();) {
@@ -67,13 +63,21 @@ public class AdminEvent extends JPanel {
             data[i][5] = this.items.get(i).type;
         }
         this.tablePanel.setBorder(new TitledBorder(
-                "Articoli in negozio"));
-
+                "Articoli in negozio, ciò che sceglierai per questo tavolo dovrà essere poi comprato"));
         model = new DefaultTableModel(data, column);
         table = new JTable(model);
         tablePanel.setViewportView(table);
+        setLayout(new GridLayout(4, 1));
+        add(back);
+        add(this.tablePanel);
+        add(new VisualizeFreeTable(event.inizio(), event.fine()));
+        add(new MakePrivateEvent(userId, event));
         this.back.addActionListener(e -> goBack());
-
+        if (VisualizeFreeTable.isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Non ci sono tavoli nella finestra temporale richista, mi spiace",
+                    "Error", JOptionPane.PLAIN_MESSAGE);
+            goBack();
+        }
     }
 
     public static Optional<Integer> getRowById(String idArticolo) {
@@ -99,8 +103,9 @@ public class AdminEvent extends JPanel {
     private void goBack() {
         removeAll();
         setLayout(new BorderLayout());
-        add(new StartEvent(this.userId, StartEvent.ADMIN));
+        add(new StartEvent(this.userId, StartEvent.CLIENT));
         revalidate();
         repaint();
     }
+
 }

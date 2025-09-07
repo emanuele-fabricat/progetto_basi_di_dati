@@ -13,7 +13,12 @@ import javax.swing.JPanel;
 
 import applicazione.controller.Controller;
 import applicazione.gui.panel.client.ClientOrder;
-import applicazione.gui.panel.common.StartAndStopEvent;
+import applicazione.gui.panel.client.OwnOrderVisualizer;
+import applicazione.gui.panel.common.EventsParticipator;
+import applicazione.gui.panel.common.EventsVisualizer;
+import applicazione.gui.panel.common.ItemsVisualizer;
+import applicazione.gui.panel.common.StartEvent;
+import applicazione.model.Client;
 
 public class ClientMainPanel extends JPanel {
     private static final Dimension SCREE_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,11 +43,16 @@ public class ClientMainPanel extends JPanel {
         }
         this.add(this.back, BorderLayout.WEST);
         this.back.addActionListener(e -> controller.accessBoard());
-        this.buttons.get(0).addActionListener(e -> this.visualizeCenter(new ClientOrder(mail)));
-        this.buttons.get(2).addActionListener(e -> this.visualizeCenter(new StartAndStopEvent(mail, StartAndStopEvent.CLIENT)));
+        this.buttons.get(0).addActionListener(e -> this.visualizeCenter(new ClientOrder(Client.getId(mail))));
+        this.buttons.get(1).addActionListener(e -> this.visualizeCenter(new OwnOrderVisualizer(Client.getId(mail))));
+        this.buttons.get(2).addActionListener(e -> this.visualizeCenter(new StartEvent(Client.getId(mail), StartEvent.CLIENT)));
+        this.buttons.get(3).addActionListener(
+                e -> this.visualizeCenter(new EventsParticipator(Client.getId(mail), EventsParticipator.CLIENT_USER)));
+        this.buttons.get(4).addActionListener(e -> this.visualizeCenter(new EventsVisualizer()));
+        this.buttons.get(5).addActionListener(e -> this.visualizeCenter(new ItemsVisualizer()));
     }
 
-    private void visualizeCenter(final JPanel panel) {
+    private void visualizeCenter(final Component panel) {
         BorderLayout layout = (BorderLayout) this.getLayout();
         Component center = layout.getLayoutComponent(BorderLayout.CENTER);
         if (center != null) {

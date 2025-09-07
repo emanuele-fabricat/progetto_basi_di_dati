@@ -78,7 +78,6 @@ public class AddCart extends JPanel {
     }
 
     private void fillCart() {
-        System.out.println(this.items);
         final String itemId;
         final int qta;
         if (areFieldsEmpty() || !isValidItemId() || !isValidNumber()) {
@@ -88,13 +87,13 @@ public class AddCart extends JPanel {
         qta = textAreaToInt(insertNumber).get();
         if (this.items.containsKey(itemId)) {
             if (Item.getQta(itemId) < this.items.get(itemId) + qta) {
-                JOptionPane.showMessageDialog(this, "inserire una quantità che non super la disponibilità", "Error",
+                JOptionPane.showMessageDialog(this, "inserire una quantità che non superi la disponibilità", "Error",
                         JOptionPane.PLAIN_MESSAGE);
                 return;
             }
             this.items.put(itemId, this.items.get(itemId) + qta);
         } else if (Item.getQta(itemId) < qta) {
-            JOptionPane.showMessageDialog(this, "inserire una quantità che non super la disponibilità", "Error",
+            JOptionPane.showMessageDialog(this, "inserire una quantità che non superi la disponibilità", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return;
         } else {
@@ -132,6 +131,8 @@ public class AddCart extends JPanel {
             throw new DAOException(e);
         }
         this.items.clear();
+        JOptionPane.showMessageDialog(this, "ordine effettuato con successo", "Success",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private boolean isValidItemId() {

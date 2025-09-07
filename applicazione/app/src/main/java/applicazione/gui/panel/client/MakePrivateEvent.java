@@ -1,9 +1,8 @@
-package applicazione.gui.panel.admin;
+package applicazione.gui.panel.client;
 
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.sql.Connection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,11 +21,11 @@ import applicazione.model.Event;
 import applicazione.model.Item;
 import applicazione.model.Table;
 
-public class MakePublicEvent extends JPanel {
-    private static final String INSERT_ADMIN_CREA_QUERY = "INSERT INTO ADMIN_CREA (id_evento, mail) "
+public class MakePrivateEvent extends JPanel {
+    private static final String INSERT_CLIENT_CREA_QUERY = "INSERT INTO CLIENTE_CREA (id_evento, id_utente) "
             + "VALUE (?, ?)";
-    private static final String INSERT_EVENTO_QUERY = "INSERT INTO EVENTO (id_evento, num_partecipanti, data_ora_inizio, data_ora_fine, visibilità, nome, presentazione, max_partecipanti) "
-            + "VALUE (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_EVENTO_QUERY = "INSERT INTO EVENTO (id_evento, num_partecipanti, data_ora_inizio, data_ora_fine, visibilità) "
+            + "VALUE (?, ?, ?, ?, ?)";
     private static final String INSERT_UTILIZZARE_QUERY = "INSERT INTO UTILIZZARE (id_evento, numero, responsabile, telefono)"
             + "VALUE (?, ?, ?, ?)";
     private static final String INSERT_SERVIRE_QUERY = "INSERT INTO SERVIRE (id_evento, numero, id_articolo, quantità) "
@@ -40,20 +39,18 @@ public class MakePublicEvent extends JPanel {
     private final JTextArea articoloId = new JTextArea();
     private final JTextArea tavolo = new JTextArea();
     private final JButton addItem = new JButton("Aggiungi materiale");
-    private final JButton createEvent = new JButton("Crea evento senza tavoli");
-    private final JButton stopAdding = new JButton("Conferma tavolo");
+    private final JButton createEvent = new JButton("Crea evento");
     private final JButton freeze = new JButton("Conferma responsabile, recapito  e tavolo");
 
     private record TableData(String responsabile, String telefono, int tavolo) {
     }
 
     private Map<String, Integer> materials = new HashMap<>();
-    private TableData tableData;
-    private Map<TableData, Map<String, Integer>> tableMaterials = new HashMap<>();
+    private Optional<TableData> tableData = Optional.empty();
     private final Event event;
     private final String userId;
 
-    public MakePublicEvent(final String userId, final Event event) {
+    public MakePrivateEvent(final String userId, final Event event) {
         this.event = event;
         this.userId = userId;
         setLayout(new GridLayout(4, 2));
@@ -63,7 +60,6 @@ public class MakePublicEvent extends JPanel {
         add(articoloId);
         add(freeze);
         add(addItem);
-        add(stopAdding);
         add(createEvent);
         this.responsabile.setBorder(new TitledBorder("Iserire il nome del responsabile per questo tavolo"));
         this.telefono.setBorder(new TitledBorder("Inserire il recapito telefonico del responsabile"));
@@ -72,8 +68,9 @@ public class MakePublicEvent extends JPanel {
         this.tavolo.setBorder(new TitledBorder("Inserire il tavolo da utilizzare"));
         this.freeze.addActionListener(e -> acceptFirstInformation());
         this.addItem.addActionListener(e -> addMaterials());
-        this.stopAdding.addActionListener(e -> newTable());
         this.createEvent.addActionListener(e -> createEvent());
+        this.createEvent.setEnabled(false);
+
     }
 
     private void acceptFirstInformation() {
@@ -83,14 +80,14 @@ public class MakePublicEvent extends JPanel {
             return;
         }
         VisualizeFreeTable.deleteRow(this.tavolo.getText());
-        this.tableData = new TableData(this.responsabile.getText(), this.telefono.getText(),
-                textAreaToInt(this.tavolo).get());
+        this.tableData = Optional.of(new TableData(this.responsabile.getText(), this.telefono.getText(),
+                textAreaToInt(this.tavolo).get()));
         this.responsabile.setEnabled(false);
         this.telefono.setEnabled(false);
         this.tavolo.setEnabled(false);
         this.freeze.setEnabled(false);
         this.createEvent.setText("Crea evento");
-        this.createEvent.setEnabled(false);
+        this.createEvent.setEnabled(true);
     }
 
     private void addMaterials() {
@@ -113,7 +110,7 @@ public class MakePublicEvent extends JPanel {
                 return;
             } else {
                 this.materials.put(this.articoloId.getText(), this.materials.get(this.articoloId.getText()) + 1);
-                AdminEvent.SubtractOnCell(AdminEvent.getRowById(this.articoloId.getText()).get());
+                ClientEvent.SubtractOnCell(ClientEvent.getRowById(this.articoloId.getText()).get());
                 JOptionPane.showMessageDialog(this, "Materiale aggiunto con successo", "Success",
                         JOptionPane.PLAIN_MESSAGE);
                 return;
@@ -121,69 +118,45 @@ public class MakePublicEvent extends JPanel {
         } else {
             this.materials.put(this.articoloId.getText(), 1);
         }
-        AdminEvent.SubtractOnCell(AdminEvent.getRowById(this.articoloId.getText()).get());
+        ClientEvent.SubtractOnCell(ClientEvent.getRowById(this.articoloId.getText()).get());
         JOptionPane.showMessageDialog(this, "Materiale aggiunto con successo", "Success", JOptionPane.PLAIN_MESSAGE);
-    }
-
-    private void newTable() {
-        this.tableMaterials.put(tableData, Collections.unmodifiableMap(this.materials));
-        this.materials = new HashMap<>();
-        this.responsabile.setEnabled(true);
-        this.telefono.setEnabled(true);
-        this.tavolo.setEnabled(true);
-        this.freeze.setEnabled(true);
-        this.createEvent.setEnabled(true);
-
     }
 
     private void createEvent() {
         try (
-                var stm1 = DAOUtils.prepare(connection, INSERT_ADMIN_CREA_QUERY, this.event.eventId(),
+                var stm1 = DAOUtils.prepare(connection, INSERT_CLIENT_CREA_QUERY, this.event.eventId(),
                         this.userId);
                 var stm2 = DAOUtils.prepare(connection, INSERT_EVENTO_QUERY, this.event.eventId(),
-                        this.event.numPartecipanti(), this.event.inizio(), this.event.fine(), this.event.type(),
-                        this.event.nome().get(), this.event.presentazione().get(),
-                        this.event.maxPartecipanti().get())) {
+                        this.event.numPartecipanti(), this.event.inizio(), this.event.fine(), this.event.type())) {
             stm1.executeUpdate();
             stm2.executeUpdate();
         } catch (Exception e) {
             throw new DAOException(e);
         }
-        if (!tableMaterials.isEmpty()) {
-            for (var entry : tableMaterials.entrySet()) {
+        if (tableData.isPresent()) {
+            try (
+                    var stm = DAOUtils.prepare(connection, INSERT_UTILIZZARE_QUERY, this.event.eventId(),
+                            this.tableData.get().tavolo, this.tableData.get().responsabile,
+                            this.tableData.get().telefono);) {
+                stm.executeUpdate();
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+            for (var entry : materials.entrySet()) {
                 try (
-                        var stm = DAOUtils.prepare(connection, INSERT_UTILIZZARE_QUERY, this.event.eventId(),
-                                entry.getKey().tavolo, entry.getKey().responsabile, entry.getKey().telefono);) {
+                        var stm = DAOUtils.prepare(connection, INSERT_SERVIRE_QUERY, this.event.eventId(),
+                                this.tableData.get().tavolo, entry.getKey(), entry.getValue());
+                        var stm2 = DAOUtils.prepare(connection, UPDATE_ARTICOLO_QUERY, entry.getValue(),
+                                entry.getKey());) {
                     stm.executeUpdate();
+                    stm2.executeUpdate();
                 } catch (Exception e) {
                     throw new DAOException(e);
                 }
-                if (!entry.getValue().isEmpty()) {
-                    for (var item : entry.getValue().entrySet()) {
-                        try (
-                                var stm = DAOUtils.prepare(connection, INSERT_SERVIRE_QUERY, this.event.eventId(),
-                                        entry.getKey().tavolo, item.getKey(), item.getValue());
-                                var stm2 = DAOUtils.prepare(connection, UPDATE_ARTICOLO_QUERY, item.getValue(),
-                                        item.getKey());) {
-                            stm.executeUpdate();
-                            stm2.executeUpdate();
-                        } catch (Exception e) {
-                            throw new DAOException(e);
-                        }
-                    }
-                }
+
             }
         }
         this.createEvent.setEnabled(false);
-    }
-
-    private boolean isTableTaken(final int table) {
-        for (var entry : tableMaterials.entrySet()) {
-            if (entry.getKey().tavolo == table) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private boolean areUnenable(Component... components) {
@@ -216,8 +189,7 @@ public class MakePublicEvent extends JPanel {
             JOptionPane.showMessageDialog(this, "Il tavolo selezionato non esiste", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;
-        } else if (Table.isOccupied(this.tavolo.getText(), this.event.inizio(), this.event.fine())
-                || isTableTaken(textAreaToInt(this.tavolo).get())) {
+        } else if (Table.isOccupied(this.tavolo.getText(), this.event.inizio(), this.event.fine())) {
             JOptionPane.showMessageDialog(this, "Il tavolo selezionato esiste ma è occupato per il tempo richiesto",
                     "Error",
                     JOptionPane.PLAIN_MESSAGE);

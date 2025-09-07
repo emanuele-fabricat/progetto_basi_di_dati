@@ -42,8 +42,8 @@ public class GiochiInScatolaInformation extends JScrollPane {
         for (int i = 0; i < this.items.size(); i++) {
             data[i][0] = this.items.get(i).linea;
             data[i][1] = this.items.get(i).meccanica;
-            data[i][2] = this.items.get(i).max;
-            data[i][3] = this.items.get(i).min;
+            data[i][2] = this.items.get(i).min;
+            data[i][3] = this.items.get(i).max;
             data[i][4] = this.items.get(i).tempo;
             data[i][5] = this.items.get(i).id;
         }

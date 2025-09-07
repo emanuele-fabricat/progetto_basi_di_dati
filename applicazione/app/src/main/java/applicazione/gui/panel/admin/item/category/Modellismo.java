@@ -19,10 +19,11 @@ import applicazione.dao.DAOData;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
-public class Modellismo extends JPanel{
+public class Modellismo extends JPanel {
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM MODELLISMO WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO MODELLISMO (marca, id_articolo) "
             + " VALUE (?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
     private final JTextArea marca = new JTextArea("marca");
     private final JTextArea insertMarca = new JTextArea();
@@ -65,9 +66,23 @@ public class Modellismo extends JPanel{
         w.dispose();
     }
 
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
+    }
+
     private boolean isValidText() {
-        if (this.insertMarca.getText().length() > 100) {
-            JOptionPane.showMessageDialog(this, "il campo linea è troppo lungo (max 100 caratteri)", "Error",
+        if (this.insertMarca.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo marca è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertMarca.getText().length() > 100) {
+            JOptionPane.showMessageDialog(this, "il campo marca è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;
         } else {

@@ -16,9 +16,10 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import applicazione.gui.panel.admin.AdminEvent;
+import applicazione.gui.panel.client.ClientEvent;
 import applicazione.model.Event;
 
-public class StartAndStopEvent extends JPanel {
+public class StartEvent extends JPanel {
     public static final int CLIENT = 0;
     public static final int ADMIN = 1;
     private final JTextArea inizio = new JTextArea();
@@ -32,8 +33,9 @@ public class StartAndStopEvent extends JPanel {
     private String eventId = UUID.randomUUID().toString();
     private final String userId;
     private final int typeOfUser;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public StartAndStopEvent(final String userId, final int typeOfUser) {
+    public StartEvent(final String userId, final int typeOfUser) {
         this.typeOfUser = typeOfUser;
         this.userId = userId;
         if (typeOfUser == ADMIN) {
@@ -66,24 +68,48 @@ public class StartAndStopEvent extends JPanel {
             this.eventId = UUID.randomUUID().toString();
         }
         if (areEmpty(this.inizio, this.fine, this.numPartecipanti) || !isRightDates(this.inizio, this.fine)
-                || !isValidNumber(this.numPartecipanti)) {
+                || !isRightOrderDate() || !isValidNumber(this.numPartecipanti)) {
             return;
         } else if (typeOfUser == ADMIN) {
             if (areEmpty(this.nome, this.presentazione, this.maxPartecipanti, this.inizio, this.fine,
-                    this.numPartecipanti) || isLong() || !isValidNumber(this.maxPartecipanti)) {
+                    this.numPartecipanti) || isLong() || !isValidNumber(this.maxPartecipanti) || !isRightCapacity()) {
                 return;
             }
             removeAll();
             setLayout(new BorderLayout());
-            add(new AdminEvent(new Event(this.userId, this.eventId, textAreaToInt(this.numPartecipanti).get(),
+            add(new AdminEvent(this.userId, new Event(this.eventId, textAreaToInt(this.numPartecipanti).get(),
                     this.inizio.getText(), this.fine.getText(), "pubblico", Optional.of(this.nome.getText()),
                     Optional.of(this.presentazione.getText()),
                     Optional.of(textAreaToInt(this.maxPartecipanti).get()))));
         } else {
-
+            removeAll();
+            setLayout(new BorderLayout());
+            add(new ClientEvent(this.userId, new Event(this.eventId, textAreaToInt(this.numPartecipanti).get(),
+                    this.inizio.getText(), this.fine.getText(), "privato", Optional.empty(), Optional.empty(),
+                    Optional.empty())));
         }
         revalidate();
         repaint();
+    }
+
+    private boolean isRightCapacity() {
+        if (textAreaToInt(this.numPartecipanti).get() <= textAreaToInt(this.maxPartecipanti).get()) {
+            return true;
+        }
+        JOptionPane.showMessageDialog(this, "Il numero di partecipanti supera il massimo", "Error",
+                JOptionPane.PLAIN_MESSAGE);
+        return false;
+    }
+
+    private boolean isRightOrderDate() {
+        LocalDateTime dateTime1 = LocalDateTime.parse(this.inizio.getText(), formatter);
+        LocalDateTime dateTime2 = LocalDateTime.parse(this.fine.getText(), formatter);
+        if (dateTime1.isBefore(dateTime2)) {
+            return true;
+        }
+        JOptionPane.showMessageDialog(this, "La data di inizio deve essere precedente a quella di fine", "Error",
+                JOptionPane.PLAIN_MESSAGE);
+        return false;
     }
 
     private boolean areEmpty(final JTextArea... fields) {

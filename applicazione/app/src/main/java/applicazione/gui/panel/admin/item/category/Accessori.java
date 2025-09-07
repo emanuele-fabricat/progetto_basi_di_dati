@@ -20,11 +20,12 @@ import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class Accessori extends JPanel {
+    private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM ACCESSORI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO ACCESSORI (tematica, id_articolo) "
             + " VALUE (?, ?)";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
             DAOData.PASSWORD);
-    private final JTextArea tematica = new JTextArea("temtica");
+    private final JTextArea tematica = new JTextArea("tematica");
     private final JTextArea insertTematica = new JTextArea();
     private final JButton ok = new JButton("confirm");
     private final JPanel gridPanel = new JPanel();
@@ -60,13 +61,27 @@ public class Accessori extends JPanel {
             } catch (Exception e) {
                 throw new DAOException(e);
             }
+            Window w = SwingUtilities.getWindowAncestor(this);
+            w.dispose();
         }
-        Window w = SwingUtilities.getWindowAncestor(this);
-        w.dispose();
+    }
+
+    public static boolean exist(final String id) {
+        try (
+                var stm = DAOUtils.prepare(connection, CATEGORY_ITEM_QUERY, id);
+                var rS = stm.executeQuery();) {
+            return rS.next();
+        } catch (Exception e) {
+            throw new DAOException(e);
+        }
     }
 
     private boolean isValidText() {
-        if (this.insertTematica.getText().length() > 100) {
+        if (this.insertTematica.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "il campo tematica è vuoto", "Error",
+                    JOptionPane.PLAIN_MESSAGE);
+            return false;            
+        } else if (this.insertTematica.getText().length() > 100) {
             JOptionPane.showMessageDialog(this, "il campo tematica è troppo lungo (max 100 caratteri)", "Error",
                     JOptionPane.PLAIN_MESSAGE);
             return false;

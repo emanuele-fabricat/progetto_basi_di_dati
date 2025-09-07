@@ -41,7 +41,8 @@ public class CarteCollezionabiliInformation extends JScrollPane {
         for (int i = 0; i < this.items.size(); i++) {
             data[i][0] = this.items.get(i).gioco;
             data[i][1] = this.items.get(i).espansione;
-            data[i][5] = this.items.get(i).id;
+            data[i][2] = this.items.get(i).formato;
+            data[i][3] = this.items.get(i).id;
         }
 
         JTable table = new JTable(data, column);

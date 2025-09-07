@@ -93,12 +93,4 @@ public class Acces extends JPanel{
             throw new DAOException(e);
         }
     }
-
-    private void setNewPanel (final JPanel newPanel) {
-        removeAll();
-        add(newPanel);
-        revalidate();
-        repaint();
-    }
-
 }
