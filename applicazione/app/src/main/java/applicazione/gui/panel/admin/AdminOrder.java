@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -20,8 +20,8 @@ public class AdminOrder extends JPanel {
     private record Product(String id, String nome, int costo, String pIva) {
     }
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private List<Product> products = new LinkedList<>();
     private final JScrollPane tablePanel = new JScrollPane();
 

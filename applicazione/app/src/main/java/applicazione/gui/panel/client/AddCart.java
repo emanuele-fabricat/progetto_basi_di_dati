@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.model.Cart;
@@ -36,8 +36,8 @@ public class AddCart extends JPanel {
             + "?)";
     private static final String UPDATE_ARTICOLO_QUERY = "UPDATE ARTICOLO " + "SET disponibilità = disponibilità - ? "
             + "WHERE id_articolo = ?";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea id = new JTextArea("id");
     private final JTextArea insertId = new JTextArea();
     private final JTextArea number = new JTextArea("Qta");

@@ -3,13 +3,33 @@
  */
 package applicazione;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JFrame;
 
 import applicazione.controller.Controller;
+import applicazione.dao.DAODataConfig;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws Exception{
         JFrame frame = new JFrame();
+
+        File jarFile = new File(
+            App.class.getProtectionDomain()
+                     .getCodeSource()
+                     .getLocation()
+                     .toURI()
+        );
+        Path jarDir = jarFile.toPath().getParent();
+        Path configPath = jarDir.resolve("config/config.txt");
+        if (!Files.exists(configPath)) {
+             configPath = Paths.get("app", "config", "config.txt");
+        }
+        DAODataConfig.load(configPath);
         new Controller(frame);
+
     }
 }

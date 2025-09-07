@@ -16,6 +16,7 @@ import applicazione.gui.panel.admin.AddTable;
 import applicazione.gui.panel.admin.AdminOrder;
 import applicazione.gui.panel.admin.OrderAdminVisualizer;
 import applicazione.gui.panel.admin.OrderClientVisualizer;
+import applicazione.gui.panel.admin.ProductVisualizer;
 import applicazione.gui.panel.admin.TableVisualizer;
 import applicazione.gui.panel.common.EventsParticipator;
 import applicazione.gui.panel.common.EventsVisualizer;
@@ -24,7 +25,7 @@ import applicazione.gui.panel.common.StartEvent;
 
 public class AdminMainPanel extends JPanel {
     private static final Dimension SCREE_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
-    private GridLayout console = new GridLayout(9, 1);
+    private GridLayout console = new GridLayout(5, 2);
     private JPanel consolePanel = new JPanel();
     private JButton back = new JButton("Indietro");
     private LinkedList<JButton> buttons = new LinkedList<>(List.of(
@@ -36,7 +37,8 @@ public class AdminMainPanel extends JPanel {
             new JButton("Visualizza tutti gli eventi"),
             new JButton("Aggiungi un tavolo"),
             new JButton("Visualizza i tavoli"),
-            new JButton("Visualizza gli articoli")));
+            new JButton("Visualizza gli articoli"),
+            new JButton("Visualizza i prodotti")));
     private AddTable addTable = new AddTable(this);
 
     public AdminMainPanel(final Controller controller, final String mail) {
@@ -55,10 +57,11 @@ public class AdminMainPanel extends JPanel {
         this.buttons.get(3).addActionListener(e -> this.visualizeCenter(new StartEvent(mail, StartEvent.ADMIN)));
         this.buttons.get(4).addActionListener(
                 e -> this.visualizeCenter(new EventsParticipator(mail, EventsParticipator.ADMIN_USER)));
-        this.buttons.get(5).addActionListener(e -> this.visualizeCenter(new EventsVisualizer()));
+        this.buttons.get(5).addActionListener(e -> this.visualizeCenter(new EventsVisualizer(mail, EventsVisualizer.ADMIN_USER)));
         this.buttons.get(6).addActionListener(e -> addTable.setVisible(true));
         this.buttons.get(7).addActionListener(e -> this.visualizeCenter(new TableVisualizer()));
         this.buttons.get(8).addActionListener(e -> this.visualizeCenter(new ItemsVisualizer()));
+        this.buttons.get(9).addActionListener(e -> this.visualizeCenter(new ProductVisualizer()));
     }
 
     private void visualizeCenter(final Component panel) {

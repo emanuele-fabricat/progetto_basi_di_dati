@@ -2,15 +2,15 @@ package applicazione.model;
 
 import java.sql.Connection;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public record Item() {
     private static final String RIGHT_ID_QUERY = "SELECT id_articolo FROM ARTICOLO WHERE id_articolo = ?";
     private static final String GET_QTA_QUERY = "SELECT disponibilità FROM ARTICOLO WHERE id_articolo = ?";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
 
 

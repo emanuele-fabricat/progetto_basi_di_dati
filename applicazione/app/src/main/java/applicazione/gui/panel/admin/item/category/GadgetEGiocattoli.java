@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -23,8 +23,8 @@ public class GadgetEGiocattoli extends JPanel {
     private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM GADGET_E_GIOCATTOLI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO GADGET_E_GIOCATTOLI (franchise, id_articolo) "
             + " VALUE (?, ?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea franchise = new JTextArea("franchise");
     private final JTextArea insertFranchise = new JTextArea();
     private final JButton ok = new JButton("confirm");

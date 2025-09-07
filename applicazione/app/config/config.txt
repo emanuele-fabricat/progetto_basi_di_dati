@@ -1,0 +1,3 @@
+db.name=casa_dei_giochi
+db.user=root
+db.password=el@pFG2020

@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -23,8 +23,8 @@ public class LibriEFumetti extends JPanel{
     private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM LIBRI_E_FUMETTI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO LIBRI_E_FUMETTI (serie, categoria, autore, id_articolo) "
             + " VALUE (?, ?, ?, ?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea serie = new JTextArea("serie");
     private final JTextArea insertSerie = new JTextArea();
     private final JTextArea categoria = new JTextArea("categoria");

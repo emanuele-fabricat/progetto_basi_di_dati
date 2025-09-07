@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -23,8 +23,8 @@ public class Accessori extends JPanel {
     private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM ACCESSORI WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO ACCESSORI (tematica, id_articolo) "
             + " VALUE (?, ?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea tematica = new JTextArea("tematica");
     private final JTextArea insertTematica = new JTextArea();
     private final JButton ok = new JButton("confirm");

@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.model.Table;
@@ -23,8 +23,8 @@ public class VisualizeFreeTable extends JScrollPane {
     private record ItemTable(String number, String capienza) {
     }
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private List<ItemTable> tables = new LinkedList<>();
 
     private static JTable table;

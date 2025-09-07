@@ -2,15 +2,15 @@ package applicazione.model;
 
 import java.sql.Connection;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public record Product() {
     private static final String RIGHT_ID_QUERY = "SELECT id_prodotto FROM PRODOTTO WHERE id_prodotto = ?";
     private static final String SEARCH_NAME_QUERY = "SELECT nome_prodotto FROM PRODOTTO WHERE id_prodotto = ?";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
 
 

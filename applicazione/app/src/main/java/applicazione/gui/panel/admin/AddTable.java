@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.model.Table;
@@ -22,8 +22,8 @@ public class AddTable extends JDialog {
     private static final int MAX_SEATS_FOR_TABLE = 16;
     private static final int MAX_SEATS_AT_ALL = 100;
     private static final String INSERT_TABLE_QUERY = "INSERT INTO TAVOLO (capienza) VALUE (?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea seats = new JTextArea(1, 25);
     private final JButton confirm = new JButton("aggiungi tavolo");
 

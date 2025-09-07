@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -17,8 +17,8 @@ public class AccessoriInformation extends JScrollPane{
     private record Item(String tematica, String id) {
     }
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private List<Item> items = new LinkedList<>();
     private final JScrollPane tablePanel = new JScrollPane();
 

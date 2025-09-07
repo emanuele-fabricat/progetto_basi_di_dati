@@ -8,15 +8,15 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public class ItemsVisualizer extends JScrollPane {
     private static final String VISUALIZE_QUERY = "SELECT * FROM ARTICOLO ORDER BY tipologia, nome";
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
     public record VisualItem(String articoloId, String nome, String descrizione, int prezzo, int disponibilità,
             String tipo) {

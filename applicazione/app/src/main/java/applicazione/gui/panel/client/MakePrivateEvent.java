@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.gui.panel.common.VisualizeFreeTable;
@@ -32,8 +32,8 @@ public class MakePrivateEvent extends JPanel {
             + "VALUE (?, ?, ?, ?)";
     private static final String UPDATE_ARTICOLO_QUERY = "UPDATE ARTICOLO " + "SET disponibilità = disponibilità - ? "
             + "WHERE id_articolo = ?";
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea responsabile = new JTextArea();
     private final JTextArea telefono = new JTextArea();
     private final JTextArea articoloId = new JTextArea();

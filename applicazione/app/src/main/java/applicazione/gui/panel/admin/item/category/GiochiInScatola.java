@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -24,8 +24,8 @@ public class GiochiInScatola extends JPanel {
     private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM GIOCHI_IN_SCATOLA WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO GIOCHI_IN_SCATOLA (linea, meccanica, min_giocatori, max_giocatori, tempo_medio, id_articolo) "
             + " VALUE (?, ?, ?, ?, ?, ?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea linea = new JTextArea("linea");
     private final JTextArea insertLinea = new JTextArea();
     private final JTextArea meccanica = new JTextArea("meccanica");

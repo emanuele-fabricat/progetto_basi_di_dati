@@ -1,0 +1,22 @@
+Per far partire l'applicazione utilizzare per prima cosa impostare il file config.txt con il proprio username e password, il file si trova in applicazione/app/config
+dopo di che è possibile eseguire l'applicazione tramite il file app-all.jar che si trova in applicazione o tramite vs code aprendo il progetto ed eseguedo la classe App
+
+I clienti già inseriti sono:
+mauro.repetto@gmail.com 
+psw: mauro
+daniele.fabbri@gmail.com 
+psw: daniele
+giacomo.giacomini@hotmail.com
+psw: giacomo
+
+Gli Admin:
+filippa.argenti@casa.dei.giochi.it
+psw: filippa
+carlo.fabiani@casa.dei.giochi.it
+psw: carlo
+gicomo.datteri@casa.dei.giochi.it
+psw: giacomo
+mario.rossi@casa.dei.giochi.it
+psw: mario
+
+I primi di ogni categoria sono stati quelli per fare le prove di funzionamento dell'app, se si vuole inserire un nuovo admin bisognerà utilizzare la mail aziendale: @casa.dei.giochi.it

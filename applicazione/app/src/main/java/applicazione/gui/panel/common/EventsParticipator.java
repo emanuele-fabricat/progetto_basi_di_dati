@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.model.Event;
@@ -35,8 +35,8 @@ public class EventsParticipator extends JPanel {
             + " VALUE (?, ?)";
     private static final String UPDATE_EVENT_QUERY = "UPDATE EVENTO SET num_partecipanti = num_partecipanti + 1 WHERE id_evento = ?";
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private List<Event> events = new LinkedList<>();
     private final List<String> marked = new LinkedList<>();
     private final int userType;

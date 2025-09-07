@@ -8,7 +8,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.model.Table;
@@ -16,8 +16,8 @@ import applicazione.model.Table;
 public class TableVisualizer extends JScrollPane{
     private static final String VISUALIZE_QUERY = "SELECT * FROM TAVOLO ORDER BY numero ";
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
     private List<Table> tables = new LinkedList<>();
 

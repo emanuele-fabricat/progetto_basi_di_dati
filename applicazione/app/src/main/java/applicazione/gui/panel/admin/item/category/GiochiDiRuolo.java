@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -23,8 +23,8 @@ public class GiochiDiRuolo extends JPanel {
     private static final String CATEGORY_ITEM_QUERY = "SELECT * FROM GIOCHI_DI_RUOLO WHERE id_articolo = ?";
     private static final String QUERY = "INSERT INTO GIOCHI_DI_RUOLO (tipo, id_articolo) "
             + " VALUE (?, ?)";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private final JTextArea tipo = new JTextArea("tipo");
     private final JTextArea insertTipo = new JTextArea();
     private final JButton ok = new JButton("confirm");

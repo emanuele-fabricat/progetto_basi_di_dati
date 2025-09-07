@@ -48,7 +48,7 @@ public class ClientMainPanel extends JPanel {
         this.buttons.get(2).addActionListener(e -> this.visualizeCenter(new StartEvent(Client.getId(mail), StartEvent.CLIENT)));
         this.buttons.get(3).addActionListener(
                 e -> this.visualizeCenter(new EventsParticipator(Client.getId(mail), EventsParticipator.CLIENT_USER)));
-        this.buttons.get(4).addActionListener(e -> this.visualizeCenter(new EventsVisualizer()));
+        this.buttons.get(4).addActionListener(e -> this.visualizeCenter(new EventsVisualizer(Client.getId(mail), EventsParticipator.CLIENT_USER)));
         this.buttons.get(5).addActionListener(e -> this.visualizeCenter(new ItemsVisualizer()));
     }
 

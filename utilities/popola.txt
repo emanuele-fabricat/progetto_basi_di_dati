@@ -68,7 +68,7 @@ values ('4c8a2d4b-9e1a-7b5d-3f2e-1a9f8c3a6d1f', 'set dadi bianchi', 10, '2345678
 
 
 insert into cliente (id_utente, mail, password, nome, cognome, data_di_nascita, indirizzo_1)
-values ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'giacomo.giacomini@hotmail.com', 'giacomo', 'giacomo', 'giacomini', '1998-12-09', 'via garibaldi 5');
+values ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'mauro.repetto@gmail.com', 'mauro', 'mauro', 'repetto', '1960-12-09', 'via garibaldi 5');
 
 insert into admin (id_admin, mail, password)
-values ('9b1deb4d-3b7d-4f2a-a2f7-3d6f0f2f9b1a', 'mario.rossi@casa.dei.giochi.it', 'mario')
+values ('9b1deb4d-3b7d-4f2a-a2f7-3d6f0f2f9b1a', 'filippa.argenti@casa.dei.giochi.it', 'filippa')

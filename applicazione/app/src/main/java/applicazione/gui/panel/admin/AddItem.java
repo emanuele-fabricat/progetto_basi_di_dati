@@ -25,7 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.gui.panel.admin.item.category.Accessori;
@@ -40,8 +40,8 @@ import applicazione.model.Order;
 import applicazione.model.Product;
 
 public class AddItem extends JPanel {
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private static final String INSERT_COMPORRE_QUERY = "INSERT INTO COMPORRE (id_prodotto, id_ordine, qta) " +
             "VALUES (?, ?, ?); ";
     private static final String INSERT_ORDINE_QUERY = "INSERT INTO ORDINE (id_ordine, somma, data, mail) " +

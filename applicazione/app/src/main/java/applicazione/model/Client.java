@@ -2,15 +2,15 @@ package applicazione.model;
 
 import java.sql.Connection;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
 public record Client() {
     private static final String RIGHT_ID_QUERY = "SELECT id_utente FROM CLIENTE WHERE id_utente = ?";
     private static final String GET_ID_QUERY = "SELECT id_utente FROM CLIENTE WHERE mail = ?";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
 
 

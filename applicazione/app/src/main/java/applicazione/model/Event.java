@@ -3,7 +3,7 @@ package applicazione.model;
 import java.sql.Connection;
 import java.util.Optional;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -13,8 +13,8 @@ public record Event(String eventId, int numPartecipanti, String inizio, String f
     private static final String GET_VISIBILITY_QUERY = "SELECT visibilità FROM EVENTO WHERE id_evento = ?";
     private static final String REMAIN_PLACES_QUARY = "SELECT id_evento FROM EVENTO WHERE num_partecipanti < max_partecipanti and id_evento = ?";
     private static final String BEFORE_DATE_QUERY = "SELECT * FROM EVENTO " + "WHERE data_ora_inizio > ? AND id_evento = ?";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     public static final int ADMIN = 0;
     public static final int CLIENT = 1;
 

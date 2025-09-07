@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 
@@ -14,8 +14,8 @@ public record Table(int numero, int capienza) {
             + "WHERE U.numero = ? " + "AND U.id_evento = E.id_evento " + "AND E.data_ora_inizio < ? "
             + "AND E.data_ora_fine > ?";
     private static final String GET_ALL_TABLE = "SELECT * FROM TAVOLO";
-    private final static Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final static Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
 
     public static boolean existId(final String id) {
         try (

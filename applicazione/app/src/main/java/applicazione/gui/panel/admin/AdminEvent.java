@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import applicazione.dao.DAOData;
+import applicazione.dao.DAODataConfig;
 import applicazione.dao.DAOException;
 import applicazione.dao.DAOUtils;
 import applicazione.gui.panel.common.StartEvent;
@@ -27,8 +27,8 @@ public class AdminEvent extends JPanel {
     private record Item(String id, String name, String description, int price, int qta, String type) {
     }
 
-    private final Connection connection = DAOUtils.localMySQLConnection(DAOData.DATABASE, DAOData.USERNAME,
-            DAOData.PASSWORD);
+    private final Connection connection = DAOUtils.localMySQLConnection(DAODataConfig.DATABASE, DAODataConfig.USERNAME,
+            DAODataConfig.PASSWORD);
     private List<Item> items = new LinkedList<>();
     private final JScrollPane tablePanel = new JScrollPane();
     private final JButton back = new JButton("Inizia un nuovo ordine");
